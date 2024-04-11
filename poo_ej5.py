@@ -1,8 +1,7 @@
-#Herencia: Permite crear nuevas clases basadas en otra clase 
-         #Clase Padre (SUPERCLASE)
-#Clase hijo(SUBCLASES)     Clase hijo (SUBCLASES)
+#POLIMORFISMO: PERMITE QUE LOS OBJETOS DE DIFERENTES CLASES PUEDAN HEREDAR Y MODIFICAR LAS ACCIONES O METODOS
 
-#Ej.1-11/04/2024 - Crear una superclase Animal con sus subclases
+
+#Ej.1-11/04/2024 - Crear una superclase Animal con sus subclases , aplicar el polimorfismo
 class Animal:
     def __init__(self,nombre,edad):
         self.nombre=nombre
@@ -17,20 +16,20 @@ class Animal:
 class Perro(Animal):
     def caminar(self):
         print(self.nombre+" esta corriendo")
+    def comer(self):
+        print("El perro de nombre "+self.nombre+" Esta Comiendo ...")
 
 class Gato(Animal):
     def dormir(self):
         print(self.nombre +" esta durmiendo")
+    def comer(self):
+        print("El gato de nombre "+self.nombre+" Esta Comiendo ...")
 
-#Crear los objetos de la superclase 
-perro=Perro("Scott",4)
+
+perro=Perro("Scott",2)
+gato=Gato("Tom",4)
+
 perro.comer()
-perro.caminar()
-
-gato=Gato("Tom",2)
 gato.comer()
-gato.dormir()
-
-
 
 
