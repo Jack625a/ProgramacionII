@@ -15,7 +15,7 @@ class Libro(MaterialBiblioteca):
 
 class Revista(MaterialBiblioteca):
     #atributos heredados
-    #atributos propios (ej. editorial, edicion)
+    #atributos propios (ej. fechaPublicacion)
 
 class Periodico(MaterialBiblioteca):
     #atributos heredados
