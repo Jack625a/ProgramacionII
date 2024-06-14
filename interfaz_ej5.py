@@ -22,9 +22,9 @@ titulo.pack()
 #Componentes que permite seleccionar al usuario valores de una secuaencia
 
 spinner=tk.Spinbox(frame1, from_=0, to=10)
-spinner.pack()
+spinner.pack(padx=10,pady=10)
 
-titulo2=tk.Label(frame2,text='Pantalla 2')
+titulo2=tk.Message(frame2,text='Spinbox: Componentes que permite seleccionar al usuario valores de una secuaencia')
 titulo2.pack()
 #Progressbar
 #Componente para mostrar progreso de una operacion
