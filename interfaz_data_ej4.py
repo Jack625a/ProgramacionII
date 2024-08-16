@@ -6,7 +6,7 @@ import sqlite3
 
 #Paso 2. Crear la venta principal
 ventana=tk.Tk()
-ventana.title("Obtencion de datos")
+ventana.title("Base de Datos")
 
 #Paso 3. Establecer una conexion a la base de datos
 conexion=sqlite3.connect('instituto.db')
@@ -24,6 +24,54 @@ def cargarDatos():
     filas=datos.fetchall()
     for fila in filas:
         contenedor.insert("",tk.END, values=fila)
+
+#Funcion para actualizar datos
+def actualizarDatos():
+    item=contenedor.selection()
+    if not item:
+        messagebox.showwarning("Adevertencia", "Seleccione un estudiante para actualizar. ")
+        return
+    registro=contenedor.item(item,'values')
+
+    #Crear la nueva ventan para actualizar
+    ventana_editar=tk.Toplevel()
+    ventana_editar.title("Actualizacion de Datos")
+
+    tk.Label(ventana_editar, text="Ci: ").grid(row=0,column=0)
+    tk.Label(ventana_editar,text="Nombre: ").grid(row=1,column=0)
+    tk.Label(ventana_editar,text="Edad: ").grid(row=2,column=0)
+    tk.Label(ventana_editar, text="Carrera: ").grid(row=3, column=0)
+
+    ci_actualizar=tk.StringVar(value=registro[0])
+    nombre_actualizar=tk.StringVar(value=registro[1])
+    edad_actualizar=tk.StringVar(value=registro[2])
+    carrera_actualizar=tk.StringVar(value=registro[3])
+
+    tk.Entry(ventana_editar,textvariable=ci_actualizar, state="readonly").grid(row=0,column=1)
+    tk.Entry(ventana_editar,textvariable=nombre_actualizar).grid(row=1,column=1)
+    tk.Entry(ventana_editar,textvariable=edad_actualizar).grid(row=2,column=1)
+    tk.Entry(ventana_editar, textvariable=carrera_actualizar).grid(row=3,column=1)
+
+    def guardarEstudiante():
+        try:
+            datos.execute(""" UPDATE estudiante SET nombre=?, edad=?, carrera=? WHERE ci=? """,(nombre_actualizar.get(),edad_actualizar.get(),carrera_actualizar.get(),ci_actualizar.get()))
+            conexion.commit()
+
+            messagebox.showinfo("Actualizacion","Estudiante actualizado correctamente.")
+            cargarDatos()
+            ventana_editar.destroy()
+        except sqlite3.Error as e:
+            messagebox.showerror("Error",f"No se pudo actual al estudiante: {e}")
+
+    tk.Button(ventana_editar,text="Actualizar",command=guardarEstudiante).grid(row=4,column=0, columnspan=2)
+
+    
+
+
+
+
+
+
 
 
 #Funcion para mostrar los detalles del estudiante seleccionado
@@ -47,11 +95,12 @@ contenedor.heading("Carrera",text="Carrera")
 contenedor.bind("<ButtonRelease-1>",mostrarEstudiante)
 
 contenedor.grid(row=5,column=0, columnspan=2)
-
+#Botones para actualizar y eliminar a los estudiantes
+botonActualizar=tk.Button(ventana, text="Actualizar Estudiante", command=actualizarDatos)
+botonActualizar.grid(row=1, column=0)
 
 #Paso 7. Cargar y mostrar los datos al iniciar la aplicacion
 cargarDatos()
-
 
 ventana.mainloop()
 
