@@ -66,7 +66,24 @@ def actualizarDatos():
     tk.Button(ventana_editar,text="Actualizar",command=guardarEstudiante).grid(row=4,column=0, columnspan=2)
 
     
+#Funcion para eliminar a un estudiante
+def eliminarEstudiante():
+    item=contenedor.selection()
+    if not item:
+        messagebox.showwarning("Adevertencia","Seleccione un estudiante para eliminar")
+        return
+    registro=contenedor.item(item,'values')
+    respuesta=messagebox.askyesno("Eliminacion",f"¿Esta seguro que desea eliminar al estudiante {registro[1]}?")
+    if respuesta:
+        try:
+            datos.execute("DELETE FROM estudiante WHERE ci=?",(registro[0],))
+            conexion.commit()
+            messagebox.showinfo("Eliminacion","Estudiante eliminado correctamente.")
+            cargarDatos()
+        except sqlite3.Error as e:
+            messagebox.showerror("Error", f"No se pudo eliminar al estudiante: {e}")
 
+            
 
 
 
@@ -98,6 +115,9 @@ contenedor.grid(row=5,column=0, columnspan=2)
 #Botones para actualizar y eliminar a los estudiantes
 botonActualizar=tk.Button(ventana, text="Actualizar Estudiante", command=actualizarDatos)
 botonActualizar.grid(row=1, column=0)
+
+botonEliminar=tk.Button(ventana,text="Eliminar Estudiante",command=eliminarEstudiante)
+botonEliminar.grid(row=1,column=1)
 
 #Paso 7. Cargar y mostrar los datos al iniciar la aplicacion
 cargarDatos()
