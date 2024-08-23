@@ -83,14 +83,6 @@ def eliminarEstudiante():
         except sqlite3.Error as e:
             messagebox.showerror("Error", f"No se pudo eliminar al estudiante: {e}")
 
-            
-
-
-
-
-
-
-
 #Funcion para mostrar los detalles del estudiante seleccionado
 def mostrarEstudiante(evento):
     item=contenedor.selection() #Obtiene el item seleccionado 
@@ -99,6 +91,32 @@ def mostrarEstudiante(evento):
         mensanje=f"Ci:{registro[0]}\nNombre: {registro[1]} \nEdad: {registro[2]} \nCarrera: {registro[3]} "
 
         messagebox.showinfo("Detalles Estudiante",mensanje)
+
+#Funcion para filtrar Carrera
+def filtrarPorCarrera():
+    carrera_seleccionada=selectorCarrera.get()
+    cargarDatosFiltro(filtro_carrera=carrera_seleccionada)
+
+#Funcion para realizar el filtrado de datos por la carrera
+def cargarDatosFiltro(filtro_carrera=None):
+    #recorremos a todos el contenedor y eliminamos todos los datos
+    for fila in contenedor.get_children():
+        contenedor.delete(fila)
+    try:
+        if filtro_carrera:
+            datos.execute("SELECT * FROM estudiante WHERE carrera=?",(filtro_carrera,))
+        else:
+            datos.execute("SELECT * FROM estudiante")
+
+        filas=datos.fetchall()
+        for fila in filas:
+            contenedor.insert("",tk.END,values=fila)
+    except sqlite3.Error as e:
+        messagebox.showerror("Error",f"Error al cargar los datos: {e}")
+    
+
+
+
 
 #Paso 6. Creacion de la interfaz con el componente treeView para mostrar los datos de los estudiantes
 columnas=("Ci", "Nombre","Edad", "Carrera")
@@ -112,12 +130,22 @@ contenedor.heading("Carrera",text="Carrera")
 contenedor.bind("<ButtonRelease-1>",mostrarEstudiante)
 
 contenedor.grid(row=5,column=0, columnspan=2)
+#Filtrado de datos
+carreras=['Sistemas Informaticos','Diseño Grafico', 'Secretariado','Contaduria']
+#Crearcion del comboBox
+tk.Label(ventana,text="Filtrar por Carrera: ").grid(row=1,column=0)
+selectorCarrera=ttk.Combobox(ventana,values=carreras)
+selectorCarrera.grid(row=1,column=1)
+botonFiltrar=tk.Button(ventana, text="Filtrar",command=filtrarPorCarrera)
+botonFiltrar.grid(row=1,column=2)
+
 #Botones para actualizar y eliminar a los estudiantes
+
 botonActualizar=tk.Button(ventana, text="Actualizar Estudiante", command=actualizarDatos)
-botonActualizar.grid(row=1, column=0)
+botonActualizar.grid(row=2, column=0)
 
 botonEliminar=tk.Button(ventana,text="Eliminar Estudiante",command=eliminarEstudiante)
-botonEliminar.grid(row=1,column=1)
+botonEliminar.grid(row=2,column=1)
 
 #Paso 7. Cargar y mostrar los datos al iniciar la aplicacion
 cargarDatos()
