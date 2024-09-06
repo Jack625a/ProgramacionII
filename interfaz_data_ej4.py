@@ -4,6 +4,7 @@ from tkinter import messagebox
 from tkinter import ttk
 import sqlite3
 
+
 #Paso 2. Crear la venta principal
 ventana=tk.Tk()
 ventana.title("Base de Datos")
