@@ -3,6 +3,9 @@ import datetime
 
 
 def main(page: ft.Page):
+
+    def notificacion(evento):
+        page.update()
     
     
     entradaNombre=ft.TextField(label="Ingrese su nombre: ",icon=ft.icons.PERSON_3)
@@ -16,9 +19,23 @@ def main(page: ft.Page):
     entrdaFechaBoton=ft.ElevatedButton(text="Seleccionar Fecha",on_click=lambda e: page.add(
         ft.DatePicker(first_date=datetime.datetime(year=2024,month=10,day=17),on_change=cambios())
     ))
+    #Casillas de verificacion
+    opcion1=ft.Checkbox(label="Opcion 1",active_color=ft.colors.ORANGE_ACCENT_200)
+    opcion2=ft.Checkbox(label="Opcion 2")
+    opcion3=ft.Checkbox(label="Opcion 3")
+    opcion4=ft.Checkbox(label="Opcion 4")
+   #Radio Botones
+    opciones=ft.RadioGroup(content=ft.Column([
+        ft.Radio(label="Opcion 1",value="Opcion1",fill_color=ft.colors.RED_200),
+        ft.Radio(label="Opcion 2",value="Opcion2"),
+        ft.Radio(label="Opcion 3",value="Opcion3"),
+        ft.Radio(label="Opcion 4",value="Opcion 3")]))
    
     
-    page.add(entradaNombre,entradaNumero,entradaContraseña,entradaCorreo,entradaFecha,entrdaFechaBoton)
+
+
+    page.add(entradaNombre,entradaNumero,entradaContraseña,entradaCorreo,entradaFecha,entrdaFechaBoton,opcion1,opcion2,opcion3,opcion4,opciones)
+
 
 
 
