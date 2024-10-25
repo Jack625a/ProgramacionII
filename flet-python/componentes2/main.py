@@ -20,7 +20,7 @@ def main(page: ft.Page):
         ft.DatePicker(first_date=datetime.datetime(year=2024,month=10,day=17),on_change=cambios())
     ))
     #Casillas de verificacion
-    opcion1=ft.Checkbox(label="Opcion 1",active_color=ft.colors.ORANGE_ACCENT_200)
+    opcion1=ft.CupertinoCheckbox (label="Opcion 1",active_color=ft.colors.ORANGE_ACCENT_200)
     opcion2=ft.Checkbox(label="Opcion 2")
     opcion3=ft.Checkbox(label="Opcion 3")
     opcion4=ft.Checkbox(label="Opcion 4")
@@ -30,11 +30,16 @@ def main(page: ft.Page):
         ft.Radio(label="Opcion 2",value="Opcion2"),
         ft.Radio(label="Opcion 3",value="Opcion3"),
         ft.Radio(label="Opcion 4",value="Opcion 3")]))
-   
-    
+
+    #Chips
+    chip=ft.Chip(label=ft.Text("Seleccionar",color=ft.colors.RED),bgcolor=ft.colors.RED,autofocus=True,color=ft.colors.CYAN,check_color=ft.colors.CYAN,selected=True)
+    #Sliders
+    volumen=ft.Slider(min=0,max=100,divisions=10,label="{value}%",mouse_cursor=ft.MouseCursor.VERTICAL_TEXT)
+    volumen2=ft.CupertinoSlider(min=0,max=100,divisions=10)
 
 
-    page.add(entradaNombre,entradaNumero,entradaContraseña,entradaCorreo,entradaFecha,entrdaFechaBoton,opcion1,opcion2,opcion3,opcion4,opciones)
+
+    page.add(entradaNombre,entradaNumero,entradaContraseña,entradaCorreo,entradaFecha,entrdaFechaBoton,opcion1,opcion2,opcion3,opcion4,opciones,chip,volumen,volumen2)
 
 
 
