@@ -1,8 +1,9 @@
 import flet as ft
 import datetime
 
-
 def main(page: ft.Page):
+    page.title="Componentes 2"
+    page.scroll=True
 
     def notificacion(evento):
         page.update()
